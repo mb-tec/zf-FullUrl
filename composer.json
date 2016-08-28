@@ -1,10 +1,10 @@
 {
-  "name":        "mb-tec/zf-emailobfuscator",
-  "description": "Email Obfuscator view Helper for Zend Framework 2",
-  "homepage":    "https://github.com/mb-tec/ZF-EmailObfuscator",
+  "name":        "mb-tec/zf-fullurl",
+  "description": "Url Plugin for Zend Framework 2",
+  "homepage":    "https://github.com/mb-tec/zf-FullUrl",
   "type":        "library",
   "license":     "GNU General Public License",
-  "keywords":   ["mb-tec", "email", "zf2", "zend", "framework"],
+  "keywords":   ["mb-tec", "url", "zf2", "zend", "framework"],
   "authors": [
     {
       "name":     "Matthias Büsing",
@@ -22,12 +22,9 @@
   "suggest": {
     "zendframework/zend-modulemanager": "To use it as a Zend Framework module"
   },
-  "require-dev": {
-    "zendframework/zend-version": "2.*"
-  },
   "autoload": {
     "psr-0": {
-      "MBtecZfEmailObfuscator": "src/"
+      "MBtecZfFullUrl": "src/"
     },
     "classmap": [
       "./Module.php"
