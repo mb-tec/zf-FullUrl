@@ -3,7 +3,7 @@
 namespace MBtecZfFullUrl;
 
 use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
-use Zend\ModuleManager\Feature\ServiceProviderInterface;
+use Zend\ModuleManager\Feature\ControllerPluginProviderInterface;
 
 /**
  * Class        Module
@@ -13,7 +13,7 @@ use Zend\ModuleManager\Feature\ServiceProviderInterface;
  * @license     GNU General Public License
  * @link        http://mb-tec.eu
  */
-class Module implements AutoloaderProviderInterface, ServiceProviderInterface
+class Module implements AutoloaderProviderInterface, ControllerPluginProviderInterface
 {
     /**
      * @return array
