@@ -1,23 +1,28 @@
 {
-  "name":        "mb-tec/zf-fullurl",
-  "description": "Url Plugin for Zend Framework 2",
-  "homepage":    "https://github.com/mb-tec/zf-FullUrl",
-  "type":        "library",
-  "license":     "GNU General Public License",
-  "keywords":   ["mb-tec", "url", "zf2", "zend", "framework"],
+  "name": "mb-tec/zf-fullurl",
+  "description": "Url Plugin for Zend Framework 3",
+  "homepage": "https://github.com/mb-tec/zf-FullUrl",
+  "type": "library",
+  "license": "GNU General Public License",
+  "keywords": [
+    "mb-tec",
+    "url",
+    "zf3",
+    "zend",
+    "framework"
+  ],
   "authors": [
     {
-      "name":     "Matthias Büsing",
-      "email":    "info@mb-tec.eu",
-      "homepage": "http://www.mb-tec.eu",
-      "role":     "Developer"
+      "name": "Matthias Büsing",
+      "email": "info@mb-tec.eu",
+      "homepage": "www.mb-tec.eu",
+      "role": "Developer"
     }
   ],
   "minimum-stability": "dev",
   "prefer-stable": true,
   "require": {
-    "php": ">=5.5",
-    "zendframework/zend-version": "2.*"
+    "php": ">=5.6",
   },
   "suggest": {
     "zendframework/zend-modulemanager": "To use it as a Zend Framework module"
