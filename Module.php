@@ -4,6 +4,7 @@ namespace MBtecZfFullUrl;
 
 use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
 use Zend\ModuleManager\Feature\ControllerPluginProviderInterface;
+use Zend\ServiceManager\ServiceManager;
 
 /**
  * Class        Module
@@ -34,10 +35,9 @@ class Module implements AutoloaderProviderInterface, ControllerPluginProviderInt
     {
         return [
             'factories' => [
-                'fullUrl' => function ($oPluginManager) {
-                    $oServiceLocator = $oPluginManager->getServiceLocator();
-                    $aConfig = (array)$oServiceLocator->get('config')['mbtec']['zf-fullurl'];
-                    $oUrlPlugin = $oPluginManager->get('url');
+                'fullUrl' => function (ServiceManager $oSm) {
+                    $aConfig = (array)$oSm->get('config')['mbtec']['zf-fullurl'];
+                    $oUrlPlugin = $oSm->get('ControllerPluginManager')->get('Url');
 
                     $bSslAvailable = (isset($aConfig['ssl_available']))
                         ? (bool)$aConfig['ssl_available']
