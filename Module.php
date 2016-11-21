@@ -2,7 +2,7 @@
 
 namespace MBtecZfFullUrl;
 
-use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
+use Zend\ModuleManager\Feature\ViewHelperProviderInterface;
 use Zend\ModuleManager\Feature\ControllerPluginProviderInterface;
 use Zend\ServiceManager\ServiceManager;
 
@@ -14,16 +14,35 @@ use Zend\ServiceManager\ServiceManager;
  * @license     GNU General Public License
  * @link        http://mb-tec.eu
  */
-class Module implements AutoloaderProviderInterface, ControllerPluginProviderInterface
+class Module implements ViewHelperProviderInterface, ControllerPluginProviderInterface
 {
     /**
      * @return array
      */
-    public function getAutoloaderConfig()
+    public function getViewHelperConfig()
     {
         return [
-            'Zend\Loader\ClassMapAutoloader' => [
-                __DIR__ . '/autoload_classmap.php',
+            'factories' => [
+                'fullUrl' => function (ServiceManager $oSm) {
+                    $aConfig = $oSm->get('config');
+                    $oUrlPlugin = $oSm->get('ControllerPluginManager')->get('Url');
+
+                    $bSslAvailable = (isset($aConfig['ssl_available']))
+                        ? (bool)$aConfig['ssl_available']
+                        : false;
+
+                    $sHost = (isset($aConfig['host']))
+                        ? (string)$aConfig['host']
+                        : '';
+
+                    $oPlugin = new View\Helper\FullUrl();
+                    $oPlugin
+                        ->setSslAvailable($bSslAvailable)
+                        ->setHost($sHost)
+                        ->setUrlPlugin($oUrlPlugin);
+
+                    return $oPlugin;
+                },
             ],
         ];
     }

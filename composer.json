@@ -22,17 +22,15 @@
   "minimum-stability": "dev",
   "prefer-stable": true,
   "require": {
-    "php": ">=5.6"
+    "php": ">=5.6",
+    "zendframework/zend-uri": "^2.5"
   },
   "suggest": {
     "zendframework/zend-modulemanager": "To use it as a Zend Framework module"
   },
   "autoload": {
-    "psr-0": {
-      "MBtecZfFullUrl": "src/"
-    },
-    "classmap": [
-      "./Module.php"
-    ]
+    "psr-4": {
+      "MBtecZfFullUrl\\": "src/"
+    }
   }
 }
