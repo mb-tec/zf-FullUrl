@@ -4,7 +4,7 @@ return [
     'mbtec' => [
         'zf-fullurl' => [
             'ssl_available' => false,
-            'host_name' => 'www.example.com',
+            'host' => 'www.example.com',
         ],
     ],
 ];
