@@ -29,8 +29,14 @@
     "zendframework/zend-modulemanager": "To use it as a Zend Framework module"
   },
   "autoload": {
+    "psr-0": {
+      "MBtecZfCache": "src/"
+    },
     "psr-4": {
       "MBtecZfFullUrl\\": "src/"
-    }
+    },
+    "classmap": [
+      "./Module.php"
+    ]
   }
 }
