@@ -30,7 +30,7 @@
   },
   "autoload": {
     "psr-0": {
-      "MBtecZfCache": "src/"
+      "MBtecZfFullUrl\\": "src/"
     },
     "psr-4": {
       "MBtecZfFullUrl\\": "src/"
