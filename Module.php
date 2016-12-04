@@ -35,13 +35,7 @@ class Module implements ViewHelperProviderInterface, ControllerPluginProviderInt
                         ? (string)$aConfig['host']
                         : '';
 
-                    $oPlugin = new View\Helper\FullUrl();
-                    $oPlugin
-                        ->setSslAvailable($bSslAvailable)
-                        ->setHost($sHost)
-                        ->setUrlPlugin($oUrlPlugin);
-
-                    return $oPlugin;
+                    return new View\Helper\FullUrl($oUrlPlugin, $sHost, $bSslAvailable);
                 },
             ],
         ];

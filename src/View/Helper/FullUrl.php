@@ -2,6 +2,7 @@
 
 namespace MBtecZfFullUrl\View\Helper;
 
+use Zend\Mvc\Controller\Plugin\Url as UrlPlugin;
 use Zend\View\Helper as ZendHelper;
 use Zend\Uri\Uri;
 
@@ -20,40 +21,17 @@ class FullUrl extends ZendHelper\AbstractHelper
     protected $_bSslAvailable = false;
 
     /**
-     * @param $bAvailable
+     * FullUrl constructor.
      *
-     * @return $this
+     * @param UrlPlugin $oPluginUrl
+     * @param String    $sHost
+     * @param Bool      $bAvailable
      */
-    public function setSslAvailable($bAvailable)
-    {
-        $this->_bSslAvailable = $bAvailable;
-
-        return $this;
-    }
-
-    /**
-     * @param $sHost
-     *
-     * @return $this
-     */
-    public function setHost($sHost)
-    {
-        $this->_sHost = $sHost;
-
-        return $this;
-    }
-
-
-    /**
-     * @param $oPluginUrl
-     *
-     * @return $this
-     */
-    public function setUrlPlugin(ZendHelper\Url $oPluginUrl)
+    public function __construct(UrlPlugin $oPluginUrl, $sHost, $bAvailable)
     {
         $this->_oPluginUrl = $oPluginUrl;
-
-        return $this;
+        $this->_sHost = $sHost;
+        $this->_bSslAvailable = $bAvailable;
     }
 
     /**
@@ -67,6 +45,19 @@ class FullUrl extends ZendHelper\AbstractHelper
      */
     public function __invoke($sRoute, $bSecure = true, $params = [], $options = [], $reuseMatchedParams = false)
     {
+        $sPath = $this->_oPluginUrl->fromRoute($sRoute, $params, $options, $reuseMatchedParams);
+
+        return $this->_fromPath($sPath, $bSecure);
+    }
+
+    /**
+     * @param      $sPath
+     * @param bool $bSecure
+     *
+     * @return string
+     */
+    protected function _fromPath($sPath, $bSecure = true)
+    {
         $sScheme = ($bSecure && $this->_bSslAvailable)
             ? 'https'
             : 'http';
@@ -75,7 +66,7 @@ class FullUrl extends ZendHelper\AbstractHelper
         $oUriOut
             ->setScheme($sScheme)
             ->setHost($this->_sHost)
-            ->setPath($this->_oPluginUrl->__invoke($sRoute, $params, $options, $reuseMatchedParams));
+            ->setPath($sPath);
 
         return $oUriOut->toString();
     }
