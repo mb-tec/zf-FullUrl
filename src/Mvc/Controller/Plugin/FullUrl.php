@@ -16,9 +16,9 @@ use Zend\Uri\Uri;
  */
 class FullUrl extends AbstractPlugin
 {
-    protected $_oPluginUrl = null;
-    protected $_sHost = '';
-    protected $_bSslAvailable = false;
+    protected $oPluginUrl = null;
+    protected $sHost = '';
+    protected $bSslAvailable = false;
 
     /**
      * FullUrl constructor.
@@ -29,9 +29,9 @@ class FullUrl extends AbstractPlugin
      */
     public function __construct(UrlPlugin $oPluginUrl, $sHost, $bAvailable)
     {
-        $this->_oPluginUrl = $oPluginUrl;
-        $this->_sHost = $sHost;
-        $this->_bSslAvailable = $bAvailable;
+        $this->oPluginUrl = $oPluginUrl;
+        $this->sHost = $sHost;
+        $this->bSslAvailable = $bAvailable;
     }
 
     /**
@@ -45,7 +45,7 @@ class FullUrl extends AbstractPlugin
      */
     public function fromRoute($sRoute, $bSecure = true, $params = [], $options = [], $reuseMatchedParams = false)
     {
-        $sPath = $this->_oPluginUrl->fromRoute($sRoute, $params, $options, $reuseMatchedParams);
+        $sPath = $this->oPluginUrl->fromRoute($sRoute, $params, $options, $reuseMatchedParams);
 
         return $this->fromPath($sPath, $bSecure);
     }
@@ -58,16 +58,16 @@ class FullUrl extends AbstractPlugin
      */
     public function fromPath($sPath, $bSecure = true)
     {
-        $sScheme = ($bSecure && $this->_bSslAvailable)
+        $sScheme = ($bSecure && $this->bSslAvailable)
             ? 'https'
             : 'http';
 
-        $oUriOut = new Uri();
-        $oUriOut
+        $oUri = new Uri();
+        $oUri
             ->setScheme($sScheme)
-            ->setHost($this->_sHost)
+            ->setHost($this->sHost)
             ->setPath($sPath);
 
-        return $oUriOut->toString();
+        return $oUri->toString();
     }
 }

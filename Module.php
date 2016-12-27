@@ -24,7 +24,7 @@ class Module implements ViewHelperProviderInterface, ControllerPluginProviderInt
         return [
             'factories' => [
                 'fullUrl' => function (ServiceManager $oSm) {
-                    $aConfig = $oSm->get('config');
+                    $aConfig = (array)$oSm->get('config')['mbtec']['zf-fullurl'];
                     $oUrlPlugin = $oSm->get('ControllerPluginManager')->get('Url');
 
                     $bSslAvailable = (isset($aConfig['ssl_available']))

@@ -16,9 +16,9 @@ use Zend\Uri\Uri;
  */
 class FullUrl extends ZendHelper\AbstractHelper
 {
-    protected $_oPluginUrl = null;
-    protected $_sHost = '';
-    protected $_bSslAvailable = false;
+    protected $oPluginUrl = null;
+    protected $sHost = '';
+    protected $bSslAvailable = false;
 
     /**
      * FullUrl constructor.
@@ -29,25 +29,39 @@ class FullUrl extends ZendHelper\AbstractHelper
      */
     public function __construct(UrlPlugin $oPluginUrl, $sHost, $bAvailable)
     {
-        $this->_oPluginUrl = $oPluginUrl;
-        $this->_sHost = $sHost;
-        $this->_bSslAvailable = $bAvailable;
+        $this->oPluginUrl = $oPluginUrl;
+        $this->sHost = $sHost;
+        $this->bSslAvailable = $bAvailable;
     }
 
     /**
-     * @param string $sRoute
-     * @param bool   $bSecure
-     * @param array  $params
-     * @param array  $options
-     * @param bool   $reuseMatchedParams
+     * @param       $sRoute
+     * @param       $bSecure
+     * @param array $aParams
+     * @param array $aOptions
+     * @param bool  $bReuseMatchedParams
      *
      * @return string
      */
-    public function __invoke($sRoute, $bSecure = true, $params = [], $options = [], $reuseMatchedParams = false)
+    public function __invoke($sRoute, $bSecure, $aParams = [], $aOptions = [], $bReuseMatchedParams = false)
     {
-        $sPath = $this->_oPluginUrl->fromRoute($sRoute, $params, $options, $reuseMatchedParams);
+        return $this->fromRoute($sRoute, $bSecure, $aParams, $aOptions, $bReuseMatchedParams);
+    }
 
-        return $this->_fromPath($sPath, $bSecure);
+    /**
+     * @param       $sRoute
+     * @param       $bSecure
+     * @param array $aParams
+     * @param array $aOptions
+     * @param bool  $bReuseMatchedParams
+     *
+     * @return string
+     */
+    public function fromRoute($sRoute, $bSecure, $aParams = [], $aOptions = [], $bReuseMatchedParams = false)
+    {
+        $sPath = $this->oPluginUrl->fromRoute($sRoute, $aParams, $aOptions, $bReuseMatchedParams);
+
+        return $this->fromPath($sPath, $bSecure);
     }
 
     /**
@@ -56,16 +70,16 @@ class FullUrl extends ZendHelper\AbstractHelper
      *
      * @return string
      */
-    protected function _fromPath($sPath, $bSecure = true)
+    public function fromPath($sPath, $bSecure = true)
     {
-        $sScheme = ($bSecure && $this->_bSslAvailable)
+        $sScheme = ($bSecure && $this->bSslAvailable)
             ? 'https'
             : 'http';
 
         $oUriOut = new Uri();
         $oUriOut
             ->setScheme($sScheme)
-            ->setHost($this->_sHost)
+            ->setHost($this->sHost)
             ->setPath($sPath);
 
         return $oUriOut->toString();
