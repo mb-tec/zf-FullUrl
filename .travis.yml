@@ -1,0 +1,64 @@
+language: php
+
+branches:
+  except:
+    - /^release-.*$/
+
+env:
+  global:
+    - COMPOSER_ARGS="--no-interaction --ignore-platform-reqs"
+    - GH_USER_NAME="Matthuas Büsing"
+    - GH_USER_EMAIL=info@mb-tec.eu
+    - GH_REF=github.com/mb-tec/zf-FullUrl.git
+
+matrix:
+  fast_finish: true
+  include:
+    - php: 5.6
+      env:
+        - DEPS=lowest
+    - php: 5.6
+      env:
+        - DEPS=locked
+        - DEPLOY_DOCS="$(if [[ $TRAVIS_BRANCH == 'master' && $TRAVIS_PULL_REQUEST == 'false' ]]; then echo -n 'true' ; else echo -n 'false' ; fi)"
+        - PATH="$HOME/.local/bin:$PATH"
+    - php: 5.6
+      env:
+        - DEPS=latest
+        - TEST_COVERAGE=true
+    - php: 7
+      env:
+        - DEPS=lowest
+    - php: 7
+      env:
+        - DEPS=locked
+        - CHECK_CS=true
+    - php: 7
+      env:
+        - DEPS=latest
+    - php: hhvm
+      env:
+        - DEPS=lowest
+    - php: hhvm
+      env:
+        - DEPS=locked
+    - php: hhvm
+      env:
+        - DEPS=latest
+
+before_install:
+  - travis_retry composer self-update
+  - if [[ $TRAVIS_PHP_VERSION != "hhvm" && $TEST_COVERAGE != 'true' ]]; then phpenv config-rm xdebug.ini ; fi
+
+install:
+  - if [[ $DEPS == 'latest' ]]; then travis_retry composer update $COMPOSER_ARGS ; fi
+  - if [[ $DEPS == 'lowest' ]]; then travis_retry composer update --prefer-lowest --prefer-stable $COMPOSER_ARGS ; fi
+  - travis_retry composer install $COMPOSER_ARGS
+  - composer show --installed
+
+script:
+  - if [[ $TEST_COVERAGE == 'true' ]]; then composer test-coverage ; else composer test ; fi
+  - if [[ $CHECK_CS == 'true' ]]; then composer cs-check ; fi
+
+after_script:
+  - if [[ $TEST_COVERAGE == 'true' ]]; then travis_retry composer upload-coverage ; fi
