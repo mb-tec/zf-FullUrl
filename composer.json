@@ -3,7 +3,7 @@
   "description": "Url Plugin for Zend Framework 3",
   "homepage": "https://github.com/mb-tec/zf-FullUrl",
   "type": "library",
-  "license": "GPL-3.0",
+  "license": "GPL-2.0",
   "keywords": [
     "mb-tec",
     "url",
