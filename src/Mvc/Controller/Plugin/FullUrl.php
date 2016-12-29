@@ -35,17 +35,17 @@ class FullUrl extends AbstractPlugin
     }
 
     /**
-     * @param string    $sRoute
-     * @param bool      $bSecure
-     * @param array     $params
-     * @param array     $options
-     * @param bool      $reuseMatchedParams
+     * @param       $sRoute
+     * @param bool  $bSecure
+     * @param array $aParams
+     * @param array $aOptions
+     * @param bool  $bReuseMatchedParams
      *
-     * @return mixed
+     * @return string
      */
-    public function fromRoute($sRoute, $bSecure = true, $params = [], $options = [], $reuseMatchedParams = false)
+    public function fromRoute($sRoute, $bSecure = true, $aParams = [], $aOptions = [], $bReuseMatchedParams = false)
     {
-        $sPath = $this->oPluginUrl->fromRoute($sRoute, $params, $options, $reuseMatchedParams);
+        $sPath = $this->oPluginUrl->fromRoute($sRoute, $aParams, $aOptions, $bReuseMatchedParams);
 
         return $this->fromPath($sPath, $bSecure);
     }
