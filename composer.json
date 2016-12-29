@@ -29,7 +29,10 @@
   "require-dev": {
     "squizlabs/php_codesniffer": "^2.7",
     "zendframework/zend-coding-standard": "^1.0",
-    "phpunit/phpunit": "^5.7"
+    "phpunit/phpunit": "^5.7",
+    "phpmd/phpmd": "^2.5",
+    "sebastian/phpcpd": "^2.0",
+    "phploc/phploc": "^3.0"
   },
   "suggest": {
     "zendframework/zend-modulemanager": "To use it as a Zend Framework module"
@@ -51,14 +54,11 @@
     }
   },
   "scripts": {
-    "check": [
-      "@cs-check",
-      "@test"
-    ],
     "cs-check": "phpcs",
     "cs-fix": "phpcbf",
-    "test": "phpunit --colors=always",
-    "test-coverage": "phpunit --colors=always --coverage-clover clover.xml",
-    "upload-coverage": "coveralls -v"
+    "phpcpd": "phpcpd",
+    "phpmd": "phpmd",
+    "phploc": "phploc src",
+    "phpunit": "phpunit --colors=always"
   }
 }
